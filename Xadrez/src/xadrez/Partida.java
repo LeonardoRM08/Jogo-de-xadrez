@@ -1,6 +1,5 @@
 package xadrez;
 
-import estrutura.Posicao;
 import estrutura.Tabuleiro;
 import xadrez.pecas.Rei;
 import xadrez.pecas.Torre;
@@ -24,12 +23,16 @@ public class Partida { // onde terão as regras
         return matriz;
     }
 
+    private void casaDaPeca(char coluna, int linha, PecaDeXadrez peca){
+        tabuleiro.posicaoDaPeca(peca, new PosicaoXadrez(coluna, linha).conversaoMatrizParaCasa());
+    }
+
     private void posicaoInicial(){
-        tabuleiro.posicaoDaPeca(new Torre(tabuleiro, Cor.BRANCO), new Posicao(0, 0));
-        tabuleiro.posicaoDaPeca(new Torre(tabuleiro, Cor.BRANCO), new Posicao(0, 7));
-        tabuleiro.posicaoDaPeca(new Torre(tabuleiro, Cor.PRETO),  new Posicao(7, 0));
-        tabuleiro.posicaoDaPeca(new Torre(tabuleiro, Cor.PRETO),  new Posicao(7, 7));
-        tabuleiro.posicaoDaPeca(new Rei(tabuleiro, Cor.BRANCO), new Posicao(0, 4));
-        tabuleiro.posicaoDaPeca(new Rei(tabuleiro, Cor.BRANCO), new Posicao(7, 4));
+        casaDaPeca('a', 1, new Torre(tabuleiro, Cor.BRANCO));
+        casaDaPeca('h', 1, new Torre(tabuleiro, Cor.BRANCO));
+        casaDaPeca('e', 1, new Rei(tabuleiro, Cor.BRANCO));
+        casaDaPeca('a', 8, new Torre(tabuleiro, Cor.PRETO));
+        casaDaPeca('h', 8, new Torre(tabuleiro, Cor.PRETO));
+        casaDaPeca('e', 8, new Rei(tabuleiro, Cor.PRETO));
     }
 }
