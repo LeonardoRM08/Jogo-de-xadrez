@@ -1,5 +1,7 @@
 package xadrez;
 
+import estrutura.Peca;
+import estrutura.Posicao;
 import estrutura.Tabuleiro;
 import xadrez.pecas.Rei;
 import xadrez.pecas.Torre;
@@ -21,6 +23,27 @@ public class Partida { // onde terão as regras
             }
         }
         return matriz;
+    }
+
+    public PecaDeXadrez movimentoDaPeca(PosicaoXadrez origem, PosicaoXadrez destino){
+        Posicao o = origem.conversaoMatrizParaCasa();
+        Posicao d = destino.conversaoMatrizParaCasa();
+        vaziaOuNao(o);
+        Peca pecaPega = moverPeca(o, d);
+        return (PecaDeXadrez) pecaPega;
+    }
+
+    private void vaziaOuNao(Posicao posicao){
+        if (!tabuleiro.aquiTemPeca(posicao)){
+            throw new ExcecaoXadrez("Não há peça na posição " + posicao);
+        }
+    }
+
+    private Peca moverPeca(Posicao origem, Posicao destino){
+        Peca p = tabuleiro.removePeca(origem);
+        Peca pecaPega = tabuleiro.removePeca(destino);
+        tabuleiro.posicaoDaPeca(p, destino);
+        return pecaPega;
     }
 
     private void casaDaPeca(char coluna, int linha, PecaDeXadrez peca){

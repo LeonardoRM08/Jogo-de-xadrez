@@ -3,12 +3,29 @@ package aplicativo;
 import estrutura.Posicao;
 import estrutura.Tabuleiro;
 import xadrez.Partida;
+import xadrez.PecaDeXadrez;
+import xadrez.PosicaoXadrez;
+
+import java.util.Scanner;
 
 public class Programa {
     public static void main(String[] args) {
+
+        Scanner sc = new Scanner(System.in);
         Partida partida = new Partida();
-        Interface.printTabuleiro(partida.getPecas());
 
+        while (true) {
+            Interface.printTabuleiro(partida.getPecas());
+            System.out.println();
 
+            System.out.print("Origem: ");
+            PosicaoXadrez origem = Interface.lePosicao(sc);
+            System.out.println();
+
+            System.out.print("Destino: ");
+            PosicaoXadrez destino = Interface.lePosicao(sc);
+
+            PecaDeXadrez pecaPega = partida.movimentoDaPeca(origem, destino);
+        }
     }
 }

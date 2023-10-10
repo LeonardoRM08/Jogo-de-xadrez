@@ -43,6 +43,20 @@ public class Tabuleiro {
         pecas[posicao.getLinha()][posicao.getColuna()] = peca;
         peca.posicao = posicao; // é acessa pelo modificador protected
     }
+
+    public Peca removePeca (Posicao posicao){
+        if(!posicaoExistente(posicao)){
+            throw new ExcecaoTabuleiro("Essa posição não existe");
+        }
+        if (peca(posicao) == null){
+            return null;
+        }
+        Peca auxiliar = peca(posicao);
+        auxiliar.posicao = null; //a peca não existe mais
+        pecas[posicao.getLinha()][posicao.getColuna()] = null;
+        return auxiliar;
+    }
+
     private boolean posicaoExistente (int linha, int coluna){
         return linha >= 0 && linha <= 7 && coluna >= 0 && coluna <= 7;
     }

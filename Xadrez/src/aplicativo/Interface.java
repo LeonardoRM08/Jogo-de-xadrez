@@ -2,6 +2,10 @@ package aplicativo;
 
 import xadrez.Cor;
 import xadrez.PecaDeXadrez;
+import xadrez.PosicaoXadrez;
+
+import java.util.InputMismatchException;
+import java.util.Scanner;
 
 public class Interface {
 
@@ -25,6 +29,18 @@ public class Interface {
     public static final String ANSI_PURPLE_BACKGROUND = "\u001B[45m";
     public static final String ANSI_CYAN_BACKGROUND = "\u001B[46m";
     public static final String ANSI_WHITE_BACKGROUND = "\u001B[47m";
+
+    public static PosicaoXadrez lePosicao(Scanner sc) {
+        try {
+            String s = sc.nextLine();
+            char coluna = s.charAt(0); // é o primeiro caractere da posição
+            int linha = Integer.parseInt(s.substring(1)); // segundo caractere
+            return new PosicaoXadrez(coluna, linha);
+        }
+        catch (RuntimeException e){
+            throw new InputMismatchException("São aceitas as casas de a1 até h8");
+        }
+    }
 
     public static  void printTabuleiro(PecaDeXadrez[][] pecas){
         System.out.println();
