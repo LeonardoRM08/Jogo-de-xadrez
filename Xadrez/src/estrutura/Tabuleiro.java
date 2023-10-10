@@ -34,4 +34,9 @@ public class Tabuleiro {
     public Peca peca(Posicao posicao){ //sobrecarga
         return pecas[posicao.getLinha()][posicao.getColuna()];
     }
+
+    public void posicaoDaPeca (Peca peca, Posicao posicao){
+        pecas[posicao.getLinha()][posicao.getColuna()] = peca;
+        peca.posicao = posicao; // é acessa pelo modificador protected
+    }
 }

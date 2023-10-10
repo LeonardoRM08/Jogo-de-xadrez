@@ -1,6 +1,9 @@
 package xadrez;
 
+import estrutura.Posicao;
 import estrutura.Tabuleiro;
+import xadrez.pecas.Rei;
+import xadrez.pecas.Torre;
 
 public class Partida { // onde terão as regras
 
@@ -8,6 +11,7 @@ public class Partida { // onde terão as regras
 
     public Partida() {
         tabuleiro = new Tabuleiro(8,8);
+        posicaoInicial();
     }
 
     public PecaDeXadrez[][] getPecas(){ //o programa só deve reconhecer a camada de xadrez, não a de tabuleiro
@@ -18,5 +22,14 @@ public class Partida { // onde terão as regras
             }
         }
         return matriz;
+    }
+
+    private void posicaoInicial(){
+        tabuleiro.posicaoDaPeca(new Torre(tabuleiro, Cor.BRANCO), new Posicao(0, 0));
+        tabuleiro.posicaoDaPeca(new Torre(tabuleiro, Cor.BRANCO), new Posicao(0, 7));
+        tabuleiro.posicaoDaPeca(new Torre(tabuleiro, Cor.PRETO),  new Posicao(7, 0));
+        tabuleiro.posicaoDaPeca(new Torre(tabuleiro, Cor.PRETO),  new Posicao(7, 7));
+        tabuleiro.posicaoDaPeca(new Rei(tabuleiro, Cor.BRANCO), new Posicao(0, 4));
+        tabuleiro.posicaoDaPeca(new Rei(tabuleiro, Cor.BRANCO), new Posicao(7, 4));
     }
 }
