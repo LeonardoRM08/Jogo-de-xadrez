@@ -29,6 +29,7 @@ public class Partida { // onde terão as regras
         Posicao o = origem.conversaoMatrizParaCasa();
         Posicao d = destino.conversaoMatrizParaCasa();
         vaziaOuNao(o);
+        destinoCertoOuNao(o, d);
         Peca pecaPega = moverPeca(o, d);
         return (PecaDeXadrez) pecaPega;
     }
@@ -39,6 +40,12 @@ public class Partida { // onde terão as regras
         }
         if (!tabuleiro.peca(posicao).pecaTravadaOuNao()){
             throw new ExcecaoXadrez("A peça não pode fazer esse movimento"); //PosicaoXadrez.conversaoCasaParaMatriz(posicao)
+        }
+    }
+
+    private void destinoCertoOuNao(Posicao origem, Posicao destino){
+        if (!tabuleiro.peca(origem).movimentoPossivel(destino)){
+            throw new ExcecaoXadrez("A peça não pode ir até esse destino");
         }
     }
 
