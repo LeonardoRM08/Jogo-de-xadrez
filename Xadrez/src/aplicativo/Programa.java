@@ -18,8 +18,8 @@ public class Programa {
 
         while (true) {
             try {
-
-                Interface.printTabuleiro(partida.getPecas());
+                Interface.limparTela();
+                Interface.printJogo(partida);
                 System.out.println();
 
                 System.out.print("Origem: ");

@@ -8,11 +8,23 @@ import xadrez.pecas.Torre;
 
 public class Partida { // onde terão as regras
 
+    private int turno;
+    private Cor jogador;
     private Tabuleiro tabuleiro;
 
     public Partida() {
         tabuleiro = new Tabuleiro(8,8);
+        turno = 1;
+        jogador = Cor.BRANCO;
         posicaoInicial();
+    }
+
+    public int getTurno(){
+        return turno;
+    }
+
+    public Cor getJogador(){
+        return jogador;
     }
 
     public PecaDeXadrez[][] getPecas(){ //o programa só deve reconhecer a camada de xadrez, não a de tabuleiro
@@ -27,23 +39,28 @@ public class Partida { // onde terão as regras
 
     public boolean[][] movimentosPossiveis (PosicaoXadrez origem){
         Posicao posicao =  origem.conversaoMatrizParaCasa();
-        vaziaOuNao(posicao);
+        podeOuNaoMexer(posicao);
         return tabuleiro.peca(posicao).movimentosPossiveis();
     }
 
     public PecaDeXadrez movimentoDaPeca(PosicaoXadrez origem, PosicaoXadrez destino){
         Posicao o = origem.conversaoMatrizParaCasa();
         Posicao d = destino.conversaoMatrizParaCasa();
-        vaziaOuNao(o);
+        podeOuNaoMexer(o);
         destinoCertoOuNao(o, d);
         Peca pecaPega = moverPeca(o, d);
+        novoTurno();
         return (PecaDeXadrez) pecaPega;
     }
 
-    private void vaziaOuNao(Posicao posicao){
+    private void podeOuNaoMexer(Posicao posicao){
         if (!tabuleiro.aquiTemPeca(posicao)){ //! nega a condição
             throw new ExcecaoXadrez("Não há peça na posição informada");
         }
+        if (jogador != ((PecaDeXadrez)tabuleiro.peca(posicao)).getCor()){
+            throw new ExcecaoXadrez("Nesse turno, deve ser escolhida a peça " + jogador);
+        }
+
         if (!tabuleiro.peca(posicao).pecaTravadaOuNao()){
             throw new ExcecaoXadrez("A peça não pode fazer esse movimento"); //PosicaoXadrez.conversaoCasaParaMatriz(posicao)
         }
@@ -62,6 +79,10 @@ public class Partida { // onde terão as regras
         return pecaPega;
     }
 
+    private void novoTurno (){
+        turno++;
+        jogador = (jogador == Cor.BRANCO)? Cor.PRETO : Cor.BRANCO; //condicional ternaria
+    }
 
     private void casaDaPeca(char coluna, int linha, PecaDeXadrez peca){
         tabuleiro.posicaoDaPeca(peca, new PosicaoXadrez(coluna, linha).conversaoMatrizParaCasa());

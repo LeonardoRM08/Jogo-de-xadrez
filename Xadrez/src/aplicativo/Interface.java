@@ -1,6 +1,7 @@
 package aplicativo;
 
 import xadrez.Cor;
+import xadrez.Partida;
 import xadrez.PecaDeXadrez;
 import xadrez.PosicaoXadrez;
 
@@ -70,28 +71,52 @@ public class Interface {
         }
     }
 
+    public static void limparTela() {
+        try {
+            if (System.getProperty("os.name").contains("Windows")) {
+                new ProcessBuilder("cmd", "/c", "cls").inheritIO().start().waitFor();
+            } else {
+                System.out.print("\033[H\033[2J");
+                System.out.flush();
+            }
+        } catch (Exception e) {
+            System.out.println("Não foi possível limpar a tela: " + e.getMessage());
+        }
+    }
+
+    public static void printJogo(Partida partida){
+        printTabuleiro(partida.getPecas());
+        System.out.println();
+        System.out.println("Turno: " + partida.getTurno());
+        System.out.println("Aguardando jogador " + partida.getJogador());
+    }
+
     public static  void printTabuleiro(PecaDeXadrez[][] pecas){
         System.out.println();
+        System.out.println("   a b c d e f g h");
         for (int i = 0; i < pecas.length; i ++){
-            System.out.print((8 - i) + " ");
+            System.out.print((8 - i) + "  ");
             for (int j = 0; j < pecas.length; j ++){
                 printPeca(pecas[i][j], false);
             }
+            System.out.print(" " + (8 - i));
             System.out.println();
         }
-        System.out.println("  a b c d e f g h");
+        System.out.println("   a b c d e f g h");
     }
 
     public static  void printTabuleiro(PecaDeXadrez[][] pecas, boolean[][] movimentosPossiveis){
         System.out.println();
+        System.out.println("   a b c d e f g h");
         for (int i = 0; i < pecas.length; i ++){
-            System.out.print((8 - i) + " ");
+            System.out.print((8 - i) + "  ");
             for (int j = 0; j < pecas.length; j ++){
                 printPeca(pecas[i][j], movimentosPossiveis[i][j]);
-            }
+                }
+            System.out.print(" " + (8 - i));
             System.out.println();
         }
-        System.out.println("  a b c d e f g h" );
+        System.out.println("   a b c d e f g h");
     }
 
     private static void printPeca(PecaDeXadrez peca, boolean colorir){
