@@ -25,6 +25,12 @@ public class Partida { // onde terão as regras
         return matriz;
     }
 
+    public boolean[][] movimentosPossiveis (PosicaoXadrez origem){
+        Posicao posicao =  origem.conversaoMatrizParaCasa();
+        vaziaOuNao(posicao);
+        return tabuleiro.peca(posicao).movimentosPossiveis();
+    }
+
     public PecaDeXadrez movimentoDaPeca(PosicaoXadrez origem, PosicaoXadrez destino){
         Posicao o = origem.conversaoMatrizParaCasa();
         Posicao d = destino.conversaoMatrizParaCasa();
