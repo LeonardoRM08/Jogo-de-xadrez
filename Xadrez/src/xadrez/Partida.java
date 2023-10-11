@@ -34,8 +34,11 @@ public class Partida { // onde terão as regras
     }
 
     private void vaziaOuNao(Posicao posicao){
-        if (!tabuleiro.aquiTemPeca(posicao)){
-            throw new ExcecaoXadrez("Não há peça na posição " + posicao);
+        if (!tabuleiro.aquiTemPeca(posicao)){ //! nega a condição
+            throw new ExcecaoXadrez("Não há peça na posição informada");
+        }
+        if (!tabuleiro.peca(posicao).pecaTravadaOuNao()){
+            throw new ExcecaoXadrez("A peça não pode fazer esse movimento"); //PosicaoXadrez.conversaoCasaParaMatriz(posicao)
         }
     }
 
@@ -45,6 +48,7 @@ public class Partida { // onde terão as regras
         tabuleiro.posicaoDaPeca(p, destino);
         return pecaPega;
     }
+
 
     private void casaDaPeca(char coluna, int linha, PecaDeXadrez peca){
         tabuleiro.posicaoDaPeca(peca, new PosicaoXadrez(coluna, linha).conversaoMatrizParaCasa());
