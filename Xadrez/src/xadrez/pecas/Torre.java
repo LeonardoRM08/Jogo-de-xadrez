@@ -21,7 +21,7 @@ public class Torre extends PecaDeXadrez {
         boolean[][] matriz = new boolean[getTabuleiro().getLinhas()][getTabuleiro().getColunas()]; //inicialmente tudo falso
         Posicao auxiliar = new Posicao(0, 0);
 
-        //acima da peça
+        //acima
         auxiliar.setValores(posicao.getLinha() - 1, posicao.getColuna()); // anda livremente na mesma coluna
         while (getTabuleiro().posicaoExistente(auxiliar) && !getTabuleiro().aquiTemPeca(auxiliar)){// enquanto aux existir e não houver peça lá
             matriz[auxiliar.getLinha()][auxiliar.getColuna()] = true;
@@ -31,7 +31,7 @@ public class Torre extends PecaDeXadrez {
             matriz[auxiliar.getLinha()][auxiliar.getColuna()] = true;
         }
 
-        //abaixo da peça
+        //abaixo
         auxiliar.setValores(posicao.getLinha() + 1, posicao.getColuna()); // anda livremente na mesma coluna
         while (getTabuleiro().posicaoExistente(auxiliar) && !getTabuleiro().aquiTemPeca(auxiliar)){
             matriz[auxiliar.getLinha()][auxiliar.getColuna()] = true;
