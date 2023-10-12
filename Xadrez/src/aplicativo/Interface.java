@@ -5,8 +5,12 @@ import xadrez.Partida;
 import xadrez.PecaDeXadrez;
 import xadrez.PosicaoXadrez;
 
+import java.sql.SQLOutput;
+import java.util.Arrays;
 import java.util.InputMismatchException;
+import java.util.List;
 import java.util.Scanner;
+import java.util.stream.Collectors;
 
 public class Interface {
 
@@ -65,8 +69,7 @@ public class Interface {
             char coluna = s.charAt(0); // é o primeiro caractere da posição
             int linha = Integer.parseInt(s.substring(1)); // segundo caractere
             return new PosicaoXadrez(coluna, linha);
-        }
-        catch (RuntimeException e){
+        } catch (RuntimeException e) {
             throw new InputMismatchException("São aceitas as casas de a1 até h8");
         }
     }
@@ -84,19 +87,21 @@ public class Interface {
         }
     }
 
-    public static void printJogo(Partida partida){
+    public static void printJogo(Partida partida, List<PecaDeXadrez> capturadas) {
         printTabuleiro(partida.getPecas());
+        System.out.println();
+        printPecasPegas(capturadas);
         System.out.println();
         System.out.println("Turno: " + partida.getTurno());
         System.out.println("Aguardando jogador " + partida.getJogador());
     }
 
-    public static  void printTabuleiro(PecaDeXadrez[][] pecas){
+    public static void printTabuleiro(PecaDeXadrez[][] pecas) {
         System.out.println();
         System.out.println("   a b c d e f g h");
-        for (int i = 0; i < pecas.length; i ++){
+        for (int i = 0; i < pecas.length; i++) {
             System.out.print((8 - i) + "  ");
-            for (int j = 0; j < pecas.length; j ++){
+            for (int j = 0; j < pecas.length; j++) {
                 printPeca(pecas[i][j], false);
             }
             System.out.print(" " + (8 - i));
@@ -105,37 +110,50 @@ public class Interface {
         System.out.println("   a b c d e f g h");
     }
 
-    public static  void printTabuleiro(PecaDeXadrez[][] pecas, boolean[][] movimentosPossiveis){
+    public static void printTabuleiro(PecaDeXadrez[][] pecas, boolean[][] movimentosPossiveis) {
         System.out.println();
         System.out.println("   a b c d e f g h");
-        for (int i = 0; i < pecas.length; i ++){
+        for (int i = 0; i < pecas.length; i++) {
             System.out.print((8 - i) + "  ");
-            for (int j = 0; j < pecas.length; j ++){
+            for (int j = 0; j < pecas.length; j++) {
                 printPeca(pecas[i][j], movimentosPossiveis[i][j]);
-                }
+            }
             System.out.print(" " + (8 - i));
             System.out.println();
         }
         System.out.println("   a b c d e f g h");
     }
 
-    private static void printPeca(PecaDeXadrez peca, boolean colorir){
-        if (colorir){ // se sim...
+    private static void printPeca(PecaDeXadrez peca, boolean colorir) {
+        if (colorir) { // se sim...
             System.out.print(ANSI_RED_BACKGROUND + ANSI_BLACK);
 
         }
-        if (peca == null){ //se posição vazia...
+        if (peca == null) { //se posição vazia...
             System.out.print("-" + ANSI_RESET);
-        }
-
-        else {
+        } else {
             if (peca.getCor() == Cor.BRANCO) {
-                System.out.print(YELLOW_BOLD_BRIGHT+ peca + ANSI_RESET);
-            }
-            else {
+                System.out.print(YELLOW_BOLD_BRIGHT + peca + ANSI_RESET);
+            } else {
                 System.out.print(BLACK_BOLD_BRIGHT + peca + ANSI_RESET);
             }
         }
         System.out.print(" ");
+    }
+
+    private static void printPecasPegas(List<PecaDeXadrez> capturada) {
+        List<PecaDeXadrez> brancas = capturada.stream().filter(x -> x.getCor() == Cor.BRANCO).toList();
+        List<PecaDeXadrez> pretas = capturada.stream().filter(x -> x.getCor() == Cor.PRETO).toList();
+        System.out.println("Peças pegas:");
+
+        System.out.println(YELLOW_BOLD_BRIGHT);
+        System.out.print("Brancas: ");
+        System.out.print(Arrays.toString(brancas.toArray()));
+        System.out.println(ANSI_RESET);
+
+        System.out.println(BLACK_BOLD_BRIGHT);
+        System.out.print("Pretas: ");
+        System.out.print(Arrays.toString(pretas.toArray()));
+        System.out.println(ANSI_RESET);
     }
 }

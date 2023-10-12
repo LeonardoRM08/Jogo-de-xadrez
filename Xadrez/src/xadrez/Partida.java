@@ -6,11 +6,17 @@ import estrutura.Tabuleiro;
 import xadrez.pecas.Rei;
 import xadrez.pecas.Torre;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public class Partida { // onde terão as regras
 
     private int turno;
     private Cor jogador;
     private Tabuleiro tabuleiro;
+
+    private List<Peca> pecasNoTabuleiro = new ArrayList<>();
+    private List<Peca> pecasPegas = new ArrayList<>();
 
     public Partida() {
         tabuleiro = new Tabuleiro(8,8);
@@ -76,6 +82,11 @@ public class Partida { // onde terão as regras
         Peca p = tabuleiro.removePeca(origem);
         Peca pecaPega = tabuleiro.removePeca(destino);
         tabuleiro.posicaoDaPeca(p, destino);
+
+        if (pecaPega != null){
+            pecasNoTabuleiro.remove(pecaPega);
+            pecasPegas.add(pecaPega);
+        }
         return pecaPega;
     }
 
@@ -86,6 +97,7 @@ public class Partida { // onde terão as regras
 
     private void casaDaPeca(char coluna, int linha, PecaDeXadrez peca){
         tabuleiro.posicaoDaPeca(peca, new PosicaoXadrez(coluna, linha).conversaoMatrizParaCasa());
+        pecasNoTabuleiro.add(peca);
     }
 
     private void posicaoInicial(){
