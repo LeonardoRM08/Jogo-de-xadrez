@@ -187,12 +187,39 @@ public class Partida { // onde terão as regras
     }
 
     private void posicaoInicial(){
+        //Torres
         casaDaPeca('a', 1, new Torre(tabuleiro, Cor.BRANCO));
         casaDaPeca('h', 1, new Torre(tabuleiro, Cor.BRANCO));
-        casaDaPeca('e', 1, new Rei(tabuleiro, Cor.BRANCO));
+
+        casaDaPeca('a', 8, new Torre(tabuleiro, Cor.PRETO));
+        casaDaPeca('h', 8, new Torre(tabuleiro, Cor.PRETO));
+
+        //Cavalos
+        casaDaPeca('b', 1, new Cavalo(tabuleiro, Cor.BRANCO));
+        casaDaPeca('g', 1, new Cavalo(tabuleiro, Cor.BRANCO));
+
+        casaDaPeca('b', 8, new Cavalo(tabuleiro, Cor.PRETO));
+        casaDaPeca('g', 8, new Cavalo(tabuleiro, Cor.PRETO));
+
+        //Bispos
         casaDaPeca('c', 1, new Bispo(tabuleiro, Cor.BRANCO));
         casaDaPeca('f', 1, new Bispo(tabuleiro, Cor.BRANCO));
-        casaDaPeca('b', 1, new Cavalo(tabuleiro, Cor.BRANCO));
+
+        casaDaPeca('c', 8, new Bispo(tabuleiro, Cor.PRETO));
+        casaDaPeca('f', 8, new Bispo(tabuleiro, Cor.PRETO));
+
+        //Reis
+        casaDaPeca('e', 1, new Rei(tabuleiro, Cor.BRANCO));
+
+        casaDaPeca('e', 8, new Rei(tabuleiro, Cor.PRETO));
+
+        //Rainhas
+
+        casaDaPeca('d', 1, new Rainha(tabuleiro, Cor.BRANCO));
+
+        casaDaPeca('d', 8, new Rainha(tabuleiro, Cor.PRETO));
+
+        //Peões
         casaDaPeca('a', 2, new Peao(tabuleiro, Cor.BRANCO));
         casaDaPeca('b', 2, new Peao(tabuleiro, Cor.BRANCO));
         casaDaPeca('c', 2, new Peao(tabuleiro, Cor.BRANCO));
@@ -202,11 +229,6 @@ public class Partida { // onde terão as regras
         casaDaPeca('g', 2, new Peao(tabuleiro, Cor.BRANCO));
         casaDaPeca('h', 2, new Peao(tabuleiro, Cor.BRANCO));
 
-        casaDaPeca('a', 8, new Torre(tabuleiro, Cor.PRETO));
-        casaDaPeca('h', 8, new Torre(tabuleiro, Cor.PRETO));
-        casaDaPeca('e', 8, new Rei(tabuleiro, Cor.PRETO));
-        casaDaPeca('c', 8, new Bispo(tabuleiro, Cor.PRETO));
-        casaDaPeca('f', 8, new Bispo(tabuleiro, Cor.PRETO));
         casaDaPeca('a', 7, new Peao(tabuleiro, Cor.PRETO));
         casaDaPeca('b', 7, new Peao(tabuleiro, Cor.PRETO));
         casaDaPeca('c', 7, new Peao(tabuleiro, Cor.PRETO));
@@ -215,7 +237,5 @@ public class Partida { // onde terão as regras
         casaDaPeca('f', 7, new Peao(tabuleiro, Cor.PRETO));
         casaDaPeca('g', 7, new Peao(tabuleiro, Cor.PRETO));
         casaDaPeca('h', 7, new Peao(tabuleiro, Cor.PRETO));
-
-
     }
 }
