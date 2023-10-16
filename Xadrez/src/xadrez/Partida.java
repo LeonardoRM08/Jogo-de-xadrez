@@ -101,7 +101,8 @@ public class Partida { // onde terão as regras
     }
 
     private Peca moverPeca(Posicao origem, Posicao destino){
-        Peca p = tabuleiro.removePeca(origem);
+        PecaDeXadrez p = (PecaDeXadrez)tabuleiro.removePeca(origem);
+        p.incrementaContadorDeMovimento();
         Peca pecaPega = tabuleiro.removePeca(destino);
         tabuleiro.posicaoDaPeca(p, destino);
 
@@ -113,7 +114,8 @@ public class Partida { // onde terão as regras
     }
 
     private void desfazerMovimento (Posicao origem, Posicao destino, Peca pecaPega){ //não permite que o jogador se coloque em check
-        Peca p = tabuleiro.removePeca(destino); //peça tirada da posição pra qual foi movida
+        PecaDeXadrez p = (PecaDeXadrez)tabuleiro.removePeca(destino); //peça tirada da posição pra qual foi movida
+        p.decrementaContadorDeMovimento();
         tabuleiro.posicaoDaPeca(p, origem);
 
         if (pecaPega != null){ //se o movimento errado comeu uma peça...
