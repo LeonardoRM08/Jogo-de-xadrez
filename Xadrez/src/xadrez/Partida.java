@@ -3,10 +3,7 @@ package xadrez;
 import estrutura.Peca;
 import estrutura.Posicao;
 import estrutura.Tabuleiro;
-import xadrez.pecas.Bispo;
-import xadrez.pecas.Peao;
-import xadrez.pecas.Rei;
-import xadrez.pecas.Torre;
+import xadrez.pecas.*;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -195,6 +192,7 @@ public class Partida { // onde terão as regras
         casaDaPeca('e', 1, new Rei(tabuleiro, Cor.BRANCO));
         casaDaPeca('c', 1, new Bispo(tabuleiro, Cor.BRANCO));
         casaDaPeca('f', 1, new Bispo(tabuleiro, Cor.BRANCO));
+        casaDaPeca('b', 1, new Cavalo(tabuleiro, Cor.BRANCO));
         casaDaPeca('a', 2, new Peao(tabuleiro, Cor.BRANCO));
         casaDaPeca('b', 2, new Peao(tabuleiro, Cor.BRANCO));
         casaDaPeca('c', 2, new Peao(tabuleiro, Cor.BRANCO));
