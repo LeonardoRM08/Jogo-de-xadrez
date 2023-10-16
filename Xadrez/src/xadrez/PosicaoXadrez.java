@@ -26,7 +26,7 @@ public class PosicaoXadrez {
         return new Posicao(8 - linha, coluna - 'a');//8 - 8 = 0; 8 - 7 = 1...'a' - 'a' = 0; 'b' - 'a' = 1...
     }
     protected static PosicaoXadrez conversaoCasaParaMatriz(Posicao posicao){
-        return new PosicaoXadrez((char)('a' - posicao.getColuna()), 8 - posicao.getLinha());
+        return new PosicaoXadrez((char)('a' + posicao.getColuna()), 8 - posicao.getLinha());
     }
 
     @Override

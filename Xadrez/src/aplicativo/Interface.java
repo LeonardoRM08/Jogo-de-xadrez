@@ -94,6 +94,9 @@ public class Interface {
         System.out.println();
         System.out.println("Turno: " + partida.getTurno());
         System.out.println("Aguardando jogador " + partida.getJogador());
+        if (partida.getCheck()){
+            System.out.println("Check!");
+        }
     }
 
     public static void printTabuleiro(PecaDeXadrez[][] pecas) {
