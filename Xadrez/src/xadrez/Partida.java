@@ -14,8 +14,8 @@ public class Partida { // onde terão as regras
     private int turno;
     private Cor jogador;
     private Tabuleiro tabuleiro;
-
     private boolean check; //sempre começa como falso
+    private boolean checkMate;
 
     private List<Peca> pecasNoTabuleiro = new ArrayList<>();
     private List<Peca> pecasPegas = new ArrayList<>();
@@ -39,6 +39,9 @@ public class Partida { // onde terão as regras
         return check;
     }
 
+    public boolean getCheckMate(){
+        return checkMate;
+    }
     public PecaDeXadrez[][] getPecas(){ //o programa só deve reconhecer a camada de xadrez, não a de tabuleiro
         PecaDeXadrez[][] matriz = new PecaDeXadrez[tabuleiro.getLinhas()][tabuleiro.getColunas()];
         for (int i = 0; i < tabuleiro.getLinhas(); i ++){
@@ -67,10 +70,14 @@ public class Partida { // onde terão as regras
             throw new ExcecaoXadrez("O movimento colocaria o seu próprio rei em check");
         }
 
-        check = testeDeCheck(oponente(jogador)); // se o adversário ficou em check depois do movimento...
+        check = testeDeCheck(oponente(jogador)) ? true : false; // se o adversário ficou em check depois do movimento...
 
-
-        novoTurno();
+        if (testeDeCheckMate(oponente(jogador))){
+            checkMate = true;
+        }
+        else{
+            novoTurno();
+        }
         return (PecaDeXadrez) pecaPega;
     }
 
@@ -147,6 +154,31 @@ public class Partida { // onde terão as regras
         return false; //o rei não está em perigo
     }
 
+    private boolean testeDeCheckMate (Cor cor){
+        if (!testeDeCheck(cor)){ //é impossível ter check mate sem check primeiro
+            return false;
+        }
+        List<Peca> lista = pecasNoTabuleiro.stream().filter(x -> ((PecaDeXadrez) x).getCor() == cor).toList();
+        for (Peca p : lista){
+            boolean[][] movimentosPossiveisDaPeca = p.movimentosPossiveis(); //válido para todas as peças do xadrez
+            for (int i = 0; i < tabuleiro.getLinhas(); i ++){
+                for (int j = 0; j < tabuleiro.getColunas(); j ++){
+                    if (movimentosPossiveisDaPeca[i][j]){ //esse movimento possível tira o rei do cheque?
+                        Posicao origem = ((PecaDeXadrez)p).getPosicaoXadrez().conversaoMatrizParaCasa();
+                        Posicao destino = new Posicao(i, j);
+                        Peca pecaPega = moverPeca(origem, destino);
+                        boolean testeDeCheck = testeDeCheck(cor); //o rei continua em check?
+                        desfazerMovimento(origem, destino, pecaPega); //precisa desfazer por ser apenas um teste
+                        if (!testeDeCheck){ // se o movimento tirar o rei do check...
+                            return false;
+                        }
+                    }
+                }
+            }
+        }
+        return true;
+    }
+
 
     private void casaDaPeca(char coluna, int linha, PecaDeXadrez peca){
         tabuleiro.posicaoDaPeca(peca, new PosicaoXadrez(coluna, linha).conversaoMatrizParaCasa());
@@ -154,11 +186,12 @@ public class Partida { // onde terão as regras
     }
 
     private void posicaoInicial(){
-        casaDaPeca('a', 1, new Torre(tabuleiro, Cor.BRANCO));
-        casaDaPeca('h', 1, new Torre(tabuleiro, Cor.BRANCO));
+        casaDaPeca('d', 1, new Torre(tabuleiro, Cor.BRANCO));
+        casaDaPeca('h', 7, new Torre(tabuleiro, Cor.BRANCO));
         casaDaPeca('e', 1, new Rei(tabuleiro, Cor.BRANCO));
-        casaDaPeca('a', 8, new Torre(tabuleiro, Cor.PRETO));
-        casaDaPeca('h', 8, new Torre(tabuleiro, Cor.PRETO));
-        casaDaPeca('e', 8, new Rei(tabuleiro, Cor.PRETO));
+
+        casaDaPeca('a', 8, new Rei(tabuleiro, Cor.PRETO));
+        casaDaPeca('b', 8, new Torre(tabuleiro, Cor.PRETO));
+
     }
 }

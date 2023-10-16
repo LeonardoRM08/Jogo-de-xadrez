@@ -93,9 +93,14 @@ public class Interface {
         printPecasPegas(capturadas);
         System.out.println();
         System.out.println("Turno: " + partida.getTurno());
-        System.out.println("Aguardando jogador " + partida.getJogador());
-        if (partida.getCheck()){
-            System.out.println("Check!");
+        if(!partida.getCheckMate()) {
+            System.out.println("Aguardando jogador " + partida.getJogador());
+            if (partida.getCheck()) {
+                System.out.println("Check!");
+            }
+        } else {
+            System.out.println("Checkmate!");
+            System.out.println("Vitória do jogador " + partida.getJogador() + "\nFim de jogo");
         }
     }
 
