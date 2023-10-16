@@ -3,6 +3,7 @@ package xadrez;
 import estrutura.Peca;
 import estrutura.Posicao;
 import estrutura.Tabuleiro;
+import xadrez.pecas.Peao;
 import xadrez.pecas.Rei;
 import xadrez.pecas.Torre;
 
@@ -188,12 +189,30 @@ public class Partida { // onde terão as regras
     }
 
     private void posicaoInicial(){
-        casaDaPeca('d', 1, new Torre(tabuleiro, Cor.BRANCO));
-        casaDaPeca('h', 7, new Torre(tabuleiro, Cor.BRANCO));
+        casaDaPeca('a', 1, new Torre(tabuleiro, Cor.BRANCO));
+        casaDaPeca('h', 1, new Torre(tabuleiro, Cor.BRANCO));
         casaDaPeca('e', 1, new Rei(tabuleiro, Cor.BRANCO));
+        casaDaPeca('a', 2, new Peao(tabuleiro, Cor.BRANCO));
+        casaDaPeca('b', 2, new Peao(tabuleiro, Cor.BRANCO));
+        casaDaPeca('c', 2, new Peao(tabuleiro, Cor.BRANCO));
+        casaDaPeca('d', 2, new Peao(tabuleiro, Cor.BRANCO));
+        casaDaPeca('e', 2, new Peao(tabuleiro, Cor.BRANCO));
+        casaDaPeca('f', 2, new Peao(tabuleiro, Cor.BRANCO));
+        casaDaPeca('g', 2, new Peao(tabuleiro, Cor.BRANCO));
+        casaDaPeca('h', 2, new Peao(tabuleiro, Cor.BRANCO));
 
-        casaDaPeca('a', 8, new Rei(tabuleiro, Cor.PRETO));
-        casaDaPeca('b', 8, new Torre(tabuleiro, Cor.PRETO));
+        casaDaPeca('a', 8, new Torre(tabuleiro, Cor.PRETO));
+        casaDaPeca('h', 8, new Torre(tabuleiro, Cor.PRETO));
+        casaDaPeca('e', 8, new Rei(tabuleiro, Cor.PRETO));
+        casaDaPeca('a', 7, new Peao(tabuleiro, Cor.PRETO));
+        casaDaPeca('b', 7, new Peao(tabuleiro, Cor.PRETO));
+        casaDaPeca('c', 7, new Peao(tabuleiro, Cor.PRETO));
+        casaDaPeca('d', 7, new Peao(tabuleiro, Cor.PRETO));
+        casaDaPeca('e', 7, new Peao(tabuleiro, Cor.PRETO));
+        casaDaPeca('f', 7, new Peao(tabuleiro, Cor.PRETO));
+        casaDaPeca('g', 7, new Peao(tabuleiro, Cor.PRETO));
+        casaDaPeca('h', 7, new Peao(tabuleiro, Cor.PRETO));
+
 
     }
 }

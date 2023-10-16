@@ -12,11 +12,6 @@ public class Torre extends PecaDeXadrez {
     }
 
     @Override
-    public String toString() {
-        return "T";
-    }
-
-    @Override
     public boolean[][] movimentosPossiveis() {
         boolean[][] matriz = new boolean[getTabuleiro().getLinhas()][getTabuleiro().getColunas()]; //inicialmente tudo falso
         Posicao auxiliar = new Posicao(0, 0);
@@ -63,4 +58,10 @@ public class Torre extends PecaDeXadrez {
 
         return matriz;
     }
+
+    @Override
+    public String toString() {
+        return "T";
+    }
+
 }
