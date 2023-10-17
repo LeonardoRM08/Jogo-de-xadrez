@@ -5,6 +5,7 @@ import estrutura.Posicao;
 import estrutura.Tabuleiro;
 import xadrez.pecas.*;
 
+import java.security.InvalidParameterException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -16,6 +17,7 @@ public class Partida { // onde terão as regras
     private boolean check; //sempre começa como falso
     private boolean checkMate;
     private PecaDeXadrez enPassant;
+    private PecaDeXadrez promocao;
 
     private List<Peca> pecasNoTabuleiro = new ArrayList<>();
     private List<Peca> pecasPegas = new ArrayList<>();
@@ -47,6 +49,10 @@ public class Partida { // onde terão as regras
         return enPassant;
     }
 
+    public PecaDeXadrez getPromocao() {
+        return promocao;
+    }
+
     public PecaDeXadrez[][] getPecas(){ //o programa só deve reconhecer a camada de xadrez, não a de tabuleiro
         PecaDeXadrez[][] matriz = new PecaDeXadrez[tabuleiro.getLinhas()][tabuleiro.getColunas()];
         for (int i = 0; i < tabuleiro.getLinhas(); i ++){
@@ -72,10 +78,20 @@ public class Partida { // onde terão as regras
 
         if (testeDeCheck(jogador)){
             desfazerMovimento(o, d, pecaPega);
-            throw new ExcecaoXadrez("O movimento colocaria o seu próprio rei em check");
+            throw new ExcecaoXadrez("Esse movimento colocaria o seu próprio rei em check");
         }
 
         PecaDeXadrez pecaMovida = (PecaDeXadrez)tabuleiro.peca(d);
+
+        //promoção - precisa ser testada antes do check
+        promocao = null;
+        if (pecaMovida instanceof Peao){
+            if ((pecaMovida.getCor() == Cor.BRANCO && d.getLinha() == 0 //significa que está na linha 8
+             || pecaMovida.getCor() == Cor.PRETO && d.getLinha() == 7)){ //significa que está na linha 1
+                promocao = (PecaDeXadrez) tabuleiro.peca(d);
+                promocao = recebePromocao("D");
+            }
+        }
 
         check = testeDeCheck(oponente(jogador)) ? true : false; // se o adversário ficou em check depois do movimento...
 
@@ -86,7 +102,7 @@ public class Partida { // onde terão as regras
             novoTurno();
         }
 
-        //enPassant
+        //en passant
         if (pecaMovida instanceof Peao && (destino.getLinha() == origem.getLinha() - 2 || destino.getLinha() == origem.getLinha() + 2)){
             enPassant = pecaMovida;
         }
@@ -114,6 +130,32 @@ public class Partida { // onde terão as regras
         if (!tabuleiro.peca(origem).movimentoPossivel(destino)){
             throw new ExcecaoXadrez("A peça não pode ir até esse destino");
         }
+    }
+
+    public PecaDeXadrez recebePromocao(String tipo){
+        if (promocao == null){
+            throw new IllegalStateException("Essa peça não pode ser promovida");
+        }
+        if (!tipo.equals("T") && !tipo.equals("C") && !tipo.equals("B") && !tipo.equals("D")){
+            throw new InvalidParameterException("Não existe peça representada por " + tipo);
+        }
+
+        Posicao pos = promocao.getPosicaoXadrez().conversaoMatrizParaCasa();
+        Peca peca = tabuleiro.removePeca(pos);
+        pecasNoTabuleiro.remove(peca);
+
+        PecaDeXadrez nova = novaPeca(tipo, promocao.getCor());
+        tabuleiro.posicaoDaPeca(nova, pos);
+        pecasNoTabuleiro.add(nova);
+
+        return nova;
+    }
+
+    private PecaDeXadrez novaPeca (String tipo, Cor cor){
+        if (tipo.equals("T")) return new Torre(tabuleiro, cor);
+        if (tipo.equals("C")) return new Cavalo(tabuleiro, cor);
+        if (tipo.equals("B")) return new Bispo(tabuleiro, cor);
+        return new Rainha(tabuleiro, cor); //se todos falharem...
     }
 
     private Peca moverPeca(Posicao origem, Posicao destino){
@@ -224,7 +266,7 @@ public class Partida { // onde terão as regras
                 return (PecaDeXadrez) p;
             }
         }
-        throw new IllegalStateException("Não existe rei de cor" + cor + "no tabuleiro"); //não é pra isso acontecer
+        throw new IllegalStateException("Não existe rei de cor " + cor + " no tabuleiro"); //não é pra isso acontecer
     }
 
     private boolean testeDeCheck (Cor cor){

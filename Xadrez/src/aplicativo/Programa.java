@@ -41,6 +41,12 @@ public class Programa {
                 if (pecaPega != null) {
                     capturadas.add(pecaPega);
                 }
+
+                if (partida.getPromocao() != null){
+                    System.out.print("Escolha a peça que entrará no lugar do peão promovido (T/C/B/D): ");
+                    String tipo = sc.nextLine();
+                    partida.recebePromocao(tipo);
+                }
             }
             catch (ExcecaoXadrez e){
                 System.out.println(e.getMessage());
