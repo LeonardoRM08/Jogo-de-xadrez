@@ -45,6 +45,10 @@ public class Programa {
                 if (partida.getPromocao() != null){
                     System.out.print("Escolha a peça que entrará no lugar do peão promovido (T/C/B/D): ");
                     String tipo = sc.nextLine();
+                    while (!tipo.equals("T") && !tipo.equals("C") && !tipo.equals("B") && !tipo.equals("D")) {
+                        System.out.print("Não existe peça representada por esse caractere. Escolha entre T,C,B ou D: ");
+                        tipo = sc.nextLine();
+                    }
                     partida.recebePromocao(tipo);
                 }
             }

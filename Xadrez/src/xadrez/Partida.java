@@ -5,7 +5,6 @@ import estrutura.Posicao;
 import estrutura.Tabuleiro;
 import xadrez.pecas.*;
 
-import java.security.InvalidParameterException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -136,9 +135,7 @@ public class Partida { // onde terão as regras
         if (promocao == null){
             throw new IllegalStateException("Essa peça não pode ser promovida");
         }
-        if (!tipo.equals("T") && !tipo.equals("C") && !tipo.equals("B") && !tipo.equals("D")){
-            throw new InvalidParameterException("Não existe peça representada por " + tipo);
-        }
+        
 
         Posicao pos = promocao.getPosicaoXadrez().conversaoMatrizParaCasa();
         Peca peca = tabuleiro.removePeca(pos);
