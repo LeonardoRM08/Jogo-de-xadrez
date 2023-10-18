@@ -135,7 +135,7 @@ public class Partida { // onde terão as regras
         if (promocao == null){
             throw new IllegalStateException("Essa peça não pode ser promovida");
         }
-        
+
 
         Posicao pos = promocao.getPosicaoXadrez().conversaoMatrizParaCasa();
         Peca peca = tabuleiro.removePeca(pos);

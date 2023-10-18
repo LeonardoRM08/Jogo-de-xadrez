@@ -1,8 +1,5 @@
 package aplicativo;
 
-import estrutura.Peca;
-import estrutura.Posicao;
-import estrutura.Tabuleiro;
 import xadrez.ExcecaoXadrez;
 import xadrez.Partida;
 import xadrez.PecaDeXadrez;
@@ -31,6 +28,8 @@ public class Programa {
                 System.out.println();
 
                 boolean[][] possibilidades = partida.movimentosPossiveis(origem);
+                Interface.limparTela();
+
                 Interface.printTabuleiro(partida.getPecas(), possibilidades);
 
                 System.out.print("Destino: ");
@@ -61,6 +60,7 @@ public class Programa {
                 sc.nextLine();
             }
         }
+        Interface.limparTela();
         Interface.printJogo(partida, capturadas);
 
 

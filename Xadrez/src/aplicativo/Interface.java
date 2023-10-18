@@ -75,16 +75,9 @@ public class Interface {
     }
 
     public static void limparTela() {
-        try {
-            if (System.getProperty("os.name").contains("Windows")) {
-                new ProcessBuilder("cmd", "/c", "cls").inheritIO().start().waitFor();
-            } else {
-                System.out.print("\033[H\033[2J");
-                System.out.flush();
-            }
-        } catch (Exception e) {
-            System.out.println("Não foi possível limpar a tela: " + e.getMessage());
-        }
+        // https://stackoverflow.com/questions/2979383/java-clear-the-console
+            System.out.print("\033[H\033[2J");
+            System.out.flush();
     }
 
     public static void printJogo(Partida partida, List<PecaDeXadrez> capturadas) {
